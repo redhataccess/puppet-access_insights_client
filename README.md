@@ -22,13 +22,14 @@ The module can be used in RHEL hosts subscribed directly to the Red Hat CDN, or 
 
 ## Setup
 
-**Setup Requirements:**
-
-RHEL hosts need to be subscribed to the Red Hat CDN or Satellite in order to fulfill Red Hat Access Insights rpm dependencies.
-
 ### What access_insights_client affects
 
 * This module will install the latest `redhat-access-insights` rpm package and install cron jobs in either `/etc/cron.daily/redhat-access-insights` or `/etc/cron.weekly/redhat-access-insights`, depending on how it is configured.
+
+###Setup Requirements
+
+RHEL hosts need to be subscribed to the Red Hat CDN or Satellite in order to fulfill Red Hat Access Insights rpm dependencies.
+
 
 
 ## Usage
