@@ -37,4 +37,10 @@ cp -r pkg/%{puppet_full_name}-%{version}/* %{buildroot}/%{puppet_modules_dir}/%{
 %{_datadir}/access_insights_client-puppet/*
 %{puppet_modules_dir}/%{puppet_module}
 
+%changelog
+* Tue Jun 23 2015 Lindani Phiri <lphiri@redhat.com> 0.0.6-1
+- Initial upstream package release
+
+
+
 

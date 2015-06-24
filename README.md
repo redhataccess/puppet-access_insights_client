@@ -2,78 +2,88 @@
 
 #### Table of Contents
 
-1. [Overview](#overview)
-2. [Module Description - What the module does and why it is useful](#module-description)
+1. [Overview - What is the access_insights_client module](#overview)
+2. [Module Description - What the access insights client does and why it is useful](#module-description)
 3. [Setup - The basics of getting started with access_insights_client](#setup)
     * [What access_insights_client affects](#what-access_insights_client-affects)
     * [Setup requirements](#setup-requirements)
-    * [Beginning with access_insights_client](#beginning-with-access_insights_client)
 4. [Usage - Configuration options and additional functionality](#usage)
 5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
 5. [Limitations - OS compatibility, etc.](#limitations)
 6. [Development - Guide for contributing to the module](#development)
 
 ## Overview
-
-A one-maybe-two sentence summary of what the module does/what problem it solves.
-This is your 30 second elevator pitch for your module. Consider including
-OS/Puppet version it works with.
+The access_insights_client module allows you to easily configure the Red Hat Access Insights service on RHEL hosts using Puppet.
 
 ## Module Description
 
-If applicable, this section should have a brief description of the technology
-the module integrates with and what that integration enables. This section
-should answer the questions: "What does this module *do*?" and "Why would I use
-it?"
-
-If your module has a range of functionality (installation, configuration,
-management, etc.) this is the time to mention it.
+This module automates the registration of RHEL hosts to  Red Hat Access Insights, a hosted service designed to help you proactively identify and resolve technical issues in Red Hat Enterprise Linux and Red Hat Cloud Infrastructure environments. 
+The module can be used in RHEL hosts subscribed directly to the Red Hat CDN, or via Red Hat Satellite 5/6.
 
 ## Setup
 
+**Setup Requirements:**
+
+RHEL hosts need to be subscribed to the Red Hat CDN or Satellite in order to fulfill Red Hat Access Insights rpm dependencies.
+
 ### What access_insights_client affects
 
-* A list of files, packages, services, or operations that the module will alter,
-  impact, or execute on the system it's installed on.
-* This is a great place to stick any warnings.
-* Can be in list or paragraph form.
+* This module will install the latest `redhat-access-insights` rpm package and install cron jobs in either `/etc/cron.daily/redhat-access-insights` or `/etc/cron.weekly/redhat-access-insights`, depending on how it is configured.
 
-### Setup Requirements **OPTIONAL**
-
-If your module requires anything extra before setting up (pluginsync enabled,
-etc.), mention it here.
-
-### Beginning with access_insights_client
-
-The very basic steps needed for a user to get the module up and running.
-
-If your most recent release breaks compatibility or requires particular steps
-for upgrading, you may wish to include an additional section here: Upgrading
-(For an example, see http://forge.puppetlabs.com/puppetlabs/firewall).
 
 ## Usage
 
-Put the classes, types, and resources for customizing, configuring, and doing
-the fancy stuff with your module here.
+This module includes a single puppet class ,`access_insights_client`, which you apply to RHEL hosts to enroll them in the Red Hat Access Insights service.
+The default parameters for the class will suffice for most deployments:
+
+```
+    class { 'access_insights_client':}
+```
+
+This will enable the Red Hat Access Insights service and schedule a daily cron job for uploading analytics data.
 
 ## Reference
 
-Here, list the classes, types, providers, facts, etc contained in your module.
-This section should include all of the under-the-hood workings of your module so
-people know what the module is touching on their system but don't need to mess
-with things. (We are working on automating this section!)
+###Class: access_insights_client
+```
+Parameters
+#
+# Change log level, valid options DEBUG, INFO, WARNING, ERROR, CRITICAL. Default DEBUG
+#loglevel=DEBUG
+# Attempt to auto configure with Satellite server
+#auto_config=True
+# Change authentication method, valid options BASIC, CERT. Default BASIC
+#authmethod=BASIC
+# username to use when authmethod is BASIC
+#username=
+# password to use when authmethod is BASIC
+#password=
+#base_url=cert-api.access.redhat.com:443/r/insights
+# URL for your proxy.  Example: http://user:pass@192.168.100.50:8080
+#proxy=
+# Location of the certificate chain for api.access.redhat.com used for Certificate Pinning
+#cert_verify=/etc/redhat-access-insights/cert-api.access.redhat.com.pem
+#cert_verify=False
+#cert_verify=True
+# Enable/Disable GPG verification of dynamic configuration
+#gpg=True
+# Automatically update the dynamic configuration
+#auto_update=True
+# Obfuscate IP addresses
+#obfuscate=False
+# Obfuscate hostname
+#obfuscate_hostname=False
+```
 
 ## Limitations
 
-This is where you list OS compatibility, version compatibility, etc.
+This module has been tested with the following operating systems:
+* RHEL 6.x
+* RHEL 7.x
 
 ## Development
 
-Since your module is awesome, other users will want to play with it. Let them
-know what the ground rules for contributing are.
+Submit your patches or pull requests to:
+GitHub: <https://github.com/redhataccess/puppet-access_insights_client>
 
-## Release Notes/Contributors/Etc **Optional**
 
-If you aren't using changelog, put your release notes here (though you should
-consider using changelog). You may also add any additional sections you feel are
-necessary or important to include here. Please use the `## ` header.
