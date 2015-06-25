@@ -1,12 +1,18 @@
 {
   "name": "lphiri-access_insights_client",
-  "version": "0.0.6",
+  "version": "0.0.8",
   "author": "Lindani Phiri (redhat)",
   "summary": "Satellite 6 Client configuration for Red Hat proactive support services",
-  "license": "Apache 2.0",
+  "license": "MIT",
   "source": "https://github.com/redhataccess/puppet-access_insights_client",
   "project_page": "https://github.com/redhataccess/puppet-access_insights_client",
   "issues_url": "https://github.com/redhataccess/puppet-access_insights_client/issues",
+  "operatingsystem_support": [
+    {
+    "operatingsystem":"RedHat",
+    "operatingsystemrelease":[ "6.0", "7.0" ]
+    }
+   ],
   "dependencies": [
     {
       "name": "puppetlabs-stdlib",

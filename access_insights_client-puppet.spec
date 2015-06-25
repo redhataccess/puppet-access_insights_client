@@ -7,7 +7,7 @@ Version:    0.0.6
 Release:    1%{?dist}
 Summary:    Puppet module for Red Hat Access Insights deployment
 Group:      Applications/System
-License:    GPLv2.0
+License:    MIT
 URL:        https://github.com/redhataccess/puppet-access_insights_client
 Source0:    %{puppet_full_name}-%{version}.tar.gz
 

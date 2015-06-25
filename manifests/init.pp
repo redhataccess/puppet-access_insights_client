@@ -4,7 +4,8 @@
 #
 # === Parameters
 #
-# Change log level, valid options DEBUG, INFO, WARNING, ERROR, CRITICAL. Default DEBUG
+# Change log level, valid options DEBUG, INFO, WARNING, ERROR, CRITICAL. 
+# Default DEBUG
 #loglevel=DEBUG
 # Attempt to auto configure with Satellite server
 #auto_config=True
@@ -17,7 +18,8 @@
 #base_url=cert-api.access.redhat.com:443/r/insights
 # URL for your proxy.  Example: http://user:pass@192.168.100.50:8080
 #proxy=
-# Location of the certificate chain for api.access.redhat.com used for Certificate Pinning
+# Location of the certificate chain for api.access.redhat.com used 
+# for Certificate Pinning
 #cert_verify=/etc/redhat-access-insights/cert-api.access.redhat.com.pem
 #cert_verify=False
 #cert_verify=True
@@ -40,7 +42,7 @@
 # Copyright 2015 Red Hat Inc.
 #
 class access_insights_client(
-	$log_level = undef,
+    $log_level = undef,
     $auto_config = 'True',
     $authmethod = undef,
     $username = undef,
@@ -61,29 +63,29 @@ class access_insights_client(
     }
 
     file {'/etc/redhat-access-insights/redhat-access-insights.conf':
-      ensure   => file,
-      content  => template('access_insights_client/redhat-access-insights.conf.erb'),
-      require  => Package['redhat-access-insights'],
+      ensure  => file,
+      content => template('access_insights_client/redhat-access-insights.conf.erb'),
+      require => Package['redhat-access-insights'],
     }
 
     case $upload_schedule {
         daily: { file { '/etc/cron.daily/redhat-access-insights':
-            ensure => 'link',
-            target => '/etc/redhat-access-insights/redhat-access-insights.cron',
-            require  => Package['redhat-access-insights'],
+            ensure  => 'link',
+            target  => '/etc/redhat-access-insights/redhat-access-insights.cron',
+            require => Package['redhat-access-insights'],
         }
-       }
+        }
         weekly: { file { '/etc/cron.weekly/redhat-access-insights':
-            ensure => 'link',
-            target => '/etc/redhat-access-insights/redhat-access-insights.cron',
-            require  => Package['redhat-access-insights'],
+            ensure  => 'link',
+            target  => '/etc/redhat-access-insights/redhat-access-insights.cron',
+            require => Package['redhat-access-insights'],
         }}
         default: { file { '/etc/cron.daily/redhat-access-insights':
-            ensure => 'link',
-            target => '/etc/redhat-access-insights/redhat-access-insights.cron',
-            require  => Package['redhat-access-insights'],
+            ensure  => 'link',
+            target  => '/etc/redhat-access-insights/redhat-access-insights.cron',
+            require => Package['redhat-access-insights'],
         }}
-    }  
+    }
     if ($upload_schedule == 'weekly') {
         file { '/etc/cron.daily/redhat-access-insights':
             ensure => 'absent'
@@ -97,9 +99,9 @@ class access_insights_client(
             ensure => 'absent'
         }
     }
-    exec { "/usr/bin/redhat-access-insights --register":
-        creates => "/etc/redhat-access-insights/.registered",
-        unless => "/usr/bin/test -f /etc/redhat-access-insights/.unregistered",
+    exec { '/usr/bin/redhat-access-insights --register':
+        creates => '/etc/redhat-access-insights/.registered',
+        unless  => '/usr/bin/test -f /etc/redhat-access-insights/.unregistered',
         require => Package['redhat-access-insights']
     }
 }
