@@ -2,8 +2,8 @@
 %global puppet_module access_insights_client
 %global puppet_full_name lphiri-%{puppet_module}
 
-Name:       access_insights_client-puppet
-Version:    0.0.6
+Name:       redhat-access-insights-puppet
+Version:    0.0.8
 Release:    1%{?dist}
 Summary:    Puppet module for Red Hat Access Insights deployment
 Group:      Applications/System
@@ -38,7 +38,7 @@ cp -r pkg/%{puppet_full_name}-%{version}/* %{buildroot}/%{puppet_modules_dir}/%{
 %{puppet_modules_dir}/%{puppet_module}
 
 %changelog
-* Tue Jun 23 2015 Lindani Phiri <lphiri@redhat.com> 0.0.6-1
+* Tue Jun 23 2015 Lindani Phiri <lphiri@redhat.com> 0.0.8-1
 - Initial upstream package release
 
 
