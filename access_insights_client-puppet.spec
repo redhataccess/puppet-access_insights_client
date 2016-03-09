@@ -7,14 +7,13 @@ Version:    0.0.8
 Release:    1%{?dist}
 Summary:    Puppet module for Red Hat Access Insights deployment
 Group:      Applications/System
-License:    MIT
+License:    GPLv2
 URL:        https://github.com/redhataccess/puppet-access_insights_client
-Source0:    %{puppet_full_name}-%{version}.tar.gz
+Source0:	  https://forgeapi.puppetlabs.com/v3/files/%{puppet_full_name}-%{version}.tar.gz
 
 BuildArch:  noarch
 
 Requires:   puppet >= 2.7.0
-BuildRequires: puppet >= 2.7.0
 
 
 %description
@@ -24,23 +23,19 @@ Puppet module for registering RHEl clients to the Red Access Insights service.
 %setup -q -n %{puppet_full_name}-%{version}
 
 %build
-puppet module build .
 
 %install
-rm -rf %{buildroot}
-install -d -m 0755 %{buildroot}/%{_datadir}/access_insights_client-puppet
-cp -r * %{buildroot}/%{_datadir}/access_insights_client-puppet
 mkdir -p %{buildroot}/%{puppet_modules_dir}/%{puppet_module}
-cp -r pkg/%{puppet_full_name}-%{version}/* %{buildroot}/%{puppet_modules_dir}/%{puppet_module}
+cp -p metadata.json %{buildroot}/%{puppet_modules_dir}/%{puppet_module}/
+cp -rp manifests/ %{buildroot}/%{puppet_modules_dir}/%{puppet_module}/manifests
+cp -rp templates/ %{buildroot}/%{puppet_modules_dir}/%{puppet_module}/templates
+
+
 
 %files
-%{_datadir}/access_insights_client-puppet/*
+%doc README.md
 %{puppet_modules_dir}/%{puppet_module}
 
 %changelog
 * Tue Jun 23 2015 Lindani Phiri <lphiri@redhat.com> 0.0.8-1
 - Initial upstream package release
-
-
-
-
