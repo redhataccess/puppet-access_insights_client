@@ -59,7 +59,7 @@ class access_insights_client(
     package {'redhat-access-insights':
       ensure   => latest,
       provider => yum,
-      source   => 'redhat-access-insights',
+      name     => 'insights-client',
     }
 
     file {'/etc/redhat-access-insights/redhat-access-insights.conf':
