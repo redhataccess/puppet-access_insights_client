@@ -56,10 +56,20 @@ class access_insights_client(
     $obsfucate_hostname = undef,
     $upload_schedule = undef,
 ){
+
+    case $::operatingsystemmajrelease {
+      7: {
+        $insights_package = 'insights-client'
+      }
+      default: {
+        $insights_package = 'redhat-access-insights'
+      }
+    }
+
     package {'redhat-access-insights':
       ensure   => latest,
       provider => yum,
-      name     => 'insights-client',
+      name     => $insights_package,
     }
 
     file {'/etc/redhat-access-insights/redhat-access-insights.conf':
