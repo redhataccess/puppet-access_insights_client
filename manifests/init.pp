@@ -52,8 +52,8 @@ class access_insights_client(
     $cert_verify = undef,
     $gpg = undef,
     $auto_update = undef,
-    $obsfucate = undef,
-    $obsfucate_hostname = undef,
+    $obfuscate = undef,
+    $obfuscate_hostname = undef,
     $upload_schedule = undef,
 ){
     package {'redhat-access-insights':
