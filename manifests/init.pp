@@ -55,6 +55,7 @@ class access_insights_client(
     $obfuscate = undef,
     $obfuscate_hostname = undef,
     $upload_schedule = undef,
+    $insights_pkg = $::insights_client_pkg
 ){
     package {'redhat-access-insights':
       ensure   => latest,
@@ -62,7 +63,7 @@ class access_insights_client(
       name   => $::insights_client_pkg,
     }
 
-    file {'/etc/redhat-access-insights/redhat-access-insights.conf':
+    file {"/etc/${::insights_client_pkg}/${::insights_client_pkg}.conf":
       ensure  => file,
       content => template('access_insights_client/redhat-access-insights.conf.erb'),
       require => Package['redhat-access-insights'],
