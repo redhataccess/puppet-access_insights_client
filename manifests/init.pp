@@ -68,9 +68,6 @@ class access_insights_client(
       require => Package['redhat-access-insights'],
     }
     
-    
-    notify{"Insights package name is ${::insights_client_pkg}":}
-   
     if ($::operatingsystemmajrelease < 7)  and  ( $::insights_client_pkg == "'redhat-access-insights") { 
 
       case $upload_schedule {
