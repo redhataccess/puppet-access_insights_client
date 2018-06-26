@@ -67,24 +67,29 @@ class access_insights_client(
       content => template('access_insights_client/redhat-access-insights.conf.erb'),
       require => Package['redhat-access-insights'],
     }
+    
+    
+    notify{"Insights package name is ${::insights_client_pkg}":}
+   
+    if ($::operatingsystemmajrelease < 7)  and  ( $::insights_client_pkg == "'redhat-access-insights") { 
 
-    case $upload_schedule {
-        daily: { file { '/etc/cron.daily/redhat-access-insights':
+      case $upload_schedule {
+          daily: { file { '/etc/cron.daily/redhat-access-insights':
             ensure  => 'link',
             target  => '/etc/redhat-access-insights/redhat-access-insights.cron',
             require => Package['redhat-access-insights'],
-        }
-        }
-        weekly: { file { '/etc/cron.weekly/redhat-access-insights':
+          }}
+          weekly: { file { '/etc/cron.weekly/redhat-access-insights':
             ensure  => 'link',
             target  => '/etc/redhat-access-insights/redhat-access-insights.cron',
             require => Package['redhat-access-insights'],
-        }}
-        default: { file { '/etc/cron.daily/redhat-access-insights':
+          }}
+          default: { file { '/etc/cron.daily/redhat-access-insights':
             ensure  => 'link',
             target  => '/etc/redhat-access-insights/redhat-access-insights.cron',
             require => Package['redhat-access-insights'],
-        }}
+          }}
+      }
     }
     if ($upload_schedule == 'weekly') {
         file { '/etc/cron.daily/redhat-access-insights':
@@ -99,6 +104,7 @@ class access_insights_client(
             ensure => 'absent'
         }
     }
+   
     exec { '/usr/bin/redhat-access-insights --register':
         creates => '/etc/redhat-access-insights/.registered',
         unless  => '/usr/bin/test -f /etc/redhat-access-insights/.unregistered',
