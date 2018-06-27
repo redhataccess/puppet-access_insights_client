@@ -2,3 +2,4 @@ pkg/*
 build/*
 doc/
 .yardoc
+Gemfile.lock
