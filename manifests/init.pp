@@ -69,7 +69,7 @@ class access_insights_client(
       require => Package['redhat-access-insights'],
     }
     
-    if ($::operatingsystemmajrelease < 7)  and  ( $::insights_client_pkg == "'redhat-access-insights") { 
+    if ($::operatingsystemmajrelease < 7) { 
 
       case $upload_schedule {
           daily: { file { '/etc/cron.daily/redhat-access-insights':
