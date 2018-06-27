@@ -59,38 +59,23 @@ class access_insights_client(
     require => Package['redhat-access-insights'],
   }
 
-  case $upload_schedule {
-    'daily': {
-      file { '/etc/cron.daily/redhat-access-insights':
-        ensure  => 'link',
-        target  => '/etc/redhat-access-insights/redhat-access-insights.cron',
-        require => Package['redhat-access-insights'],
-      }
-    }
-    'weekly': {
-      file { '/etc/cron.weekly/redhat-access-insights':
-        ensure  => 'link',
-        target  => '/etc/redhat-access-insights/redhat-access-insights.cron',
-        require => Package['redhat-access-insights'],
-      }
-    }
-    default: {
-      file { '/etc/cron.daily/redhat-access-insights':
-        ensure  => 'link',
-        target  => '/etc/redhat-access-insights/redhat-access-insights.cron',
-        require => Package['redhat-access-insights'],
-      }
-    }
-  }
   if $upload_schedule == 'weekly' {
+    file { '/etc/cron.weekly/redhat-access-insights':
+      ensure  => 'link',
+      target  => '/etc/redhat-access-insights/redhat-access-insights.cron',
+      require => Package['redhat-access-insights'],
+    }
+
     file { '/etc/cron.daily/redhat-access-insights':
       ensure => 'absent',
     }
-  } elsif $upload_schedule == 'daily' {
-    file { '/etc/cron.weekly/redhat-access-insights':
-      ensure => 'absent',
-    }
   } else {
+    file { '/etc/cron.daily/redhat-access-insights':
+      ensure  => 'link',
+      target  => '/etc/redhat-access-insights/redhat-access-insights.cron',
+      require => Package['redhat-access-insights'],
+    }
+
     file { '/etc/cron.weekly/redhat-access-insights':
       ensure => 'absent',
     }
