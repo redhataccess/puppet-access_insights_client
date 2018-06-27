@@ -9,14 +9,18 @@
   "issues_url": "https://github.com/redhataccess/puppet-access_insights_client/issues",
   "operatingsystem_support": [
     {
-    "operatingsystem":"RedHat",
-    "operatingsystemrelease":[ "6.0", "7.0" ]
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
     }
-   ],
-  "dependencies": [
+  ],
+  "dependencies": [],
+  "requirements": [
     {
-      "name": "puppetlabs-stdlib",
-      "version_range": ">= 1.0.0"
+      "name": "puppet",
+      "version_requirement": ">= 3.8.0 < 6.0.0"
     }
   ]
 }
