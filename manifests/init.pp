@@ -1,5 +1,6 @@
 # @summary
-#   Full description of class access_insights_client here.
+#   The access insights module is intended to deploy and configure the Red Hat
+#   Access Insights client.
 #
 # @param log_level
 #   Change log level, valid options DEBUG, INFO, WARNING, ERROR, CRITICAL.
