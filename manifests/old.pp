@@ -29,8 +29,6 @@
 #   Whether to obfuscate IP addresses.
 # @param obfuscate_hostname
 #   Whether to obfuscate hostname.
-# @param upload_schedule
-#   How often to update. Can be daily or weekly.
 #
 # @author Lindani Phiri <lphiri@redhat.com>
 # @author Dan Varga  <dvarga@redhat.com>
@@ -51,7 +49,6 @@ class access_insights_client::old (
   $auto_update = undef,
   $obfuscate = undef,
   $obfuscate_hostname = undef,
-  $upload_schedule = undef,
 ) {
   package { $package_name:
     ensure => latest,
@@ -63,26 +60,14 @@ class access_insights_client::old (
     require => Package[$package_name],
   }
 
-  if $upload_schedule == 'weekly' {
-    file { "/etc/cron.weekly/${package_name}":
-      ensure  => 'link',
-      target  => "/etc/${package_name}/${package_name}.cron",
-      require => Package[$package_name],
-    }
+  file { "/etc/cron.daily/${package_name}":
+    ensure  => 'link',
+    target  => "/etc/${package_name}/${package_name}.cron",
+    require => Package[$package_name],
+  }
 
-    file { "/etc/cron.daily/${package_name}":
-      ensure => 'absent',
-    }
-  } else {
-    file { "/etc/cron.daily/${package_name}":
-      ensure  => 'link',
-      target  => "/etc/${package_name}/${package_name}.cron",
-      require => Package[$package_name],
-    }
-
-    file { "/etc/cron.weekly/${package_name}":
-      ensure => 'absent',
-    }
+  file { "/etc/cron.weekly/${package_name}":
+    ensure => 'absent',
   }
 
   exec { "/usr/bin/${package_name} --register":

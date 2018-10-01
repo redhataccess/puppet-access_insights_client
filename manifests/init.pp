@@ -27,8 +27,6 @@
 #   Whether to obfuscate IP addresses.
 # @param obfuscate_hostname
 #   Whether to obfuscate hostname.
-# @param upload_schedule
-#   How often to update. Can be daily or weekly.
 # @param deployment_style
 #   How the module should be deploy. Can be undef (auto),
 #   current (6.10+ or 7.5+) or old.
@@ -51,7 +49,6 @@ class access_insights_client(
   $auto_update = undef,
   $obfuscate = undef,
   $obfuscate_hostname = undef,
-  $upload_schedule = undef,
   $deployment_style = undef,
 ) {
   if $deployment_style {
@@ -78,6 +75,5 @@ class access_insights_client(
     auto_update        => $auto_update,
     obfuscate          => $obfuscate,
     obfuscate_hostname => $obfuscate_hostname,
-    upload_schedule    => $upload_schedule,
   }
 }

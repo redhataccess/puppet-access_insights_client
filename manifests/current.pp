@@ -28,8 +28,6 @@
 #   Whether to obfuscate IP addresses.
 # @param obfuscate_hostname
 #   Whether to obfuscate hostname.
-# @param upload_schedule
-#   How often to update. Can be daily or weekly.
 #
 # @author Lindani Phiri <lphiri@redhat.com>
 # @author Dan Varga  <dvarga@redhat.com>
@@ -50,7 +48,6 @@ class access_insights_client::current (
   $auto_update = undef,
   $obfuscate = undef,
   $obfuscate_hostname = undef,
-  $upload_schedule = undef,
 ) {
   package { $package_name:
     ensure => installed,
@@ -79,33 +76,19 @@ class access_insights_client::current (
         ensure => 'absent',
     }
 
-    # TODO: how to override the schedule?
-
     service { "${package_name}.timer":
       ensure => 'running',
       enable => true,
     }
   } else {
-    if $upload_schedule == 'weekly' {
-      file { "/etc/cron.weekly/${package_name}":
-        ensure  => 'link',
-        target  => "/etc/${package_name}/${package_name}.cron",
-        require => Package[$package_name],
-      }
+    file { "/etc/cron.daily/${package_name}":
+      ensure  => 'link',
+      target  => "/etc/${package_name}/${package_name}.cron",
+      require => Package[$package_name],
+    }
 
-      file { "/etc/cron.daily/${package_name}":
-        ensure => 'absent',
-      }
-    } else {
-      file { "/etc/cron.daily/${package_name}":
-        ensure  => 'link',
-        target  => "/etc/${package_name}/${package_name}.cron",
-        require => Package[$package_name],
-      }
-
-      file { "/etc/cron.weekly/${package_name}":
-        ensure => 'absent',
-      }
+    file { "/etc/cron.weekly/${package_name}":
+      ensure => 'absent',
     }
   }
 
