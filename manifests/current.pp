@@ -77,8 +77,9 @@ class access_insights_client::current (
     }
 
     service { "${package_name}.timer":
-      ensure => 'running',
-      enable => true,
+      ensure  => 'running',
+      enable  => true,
+      require => Package[$package_name],
     }
   } else {
     file { "/etc/cron.daily/${package_name}":
