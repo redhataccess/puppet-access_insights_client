@@ -24,7 +24,7 @@ The module can be used in RHEL hosts subscribed directly to the Red Hat CDN, or 
 
 ### What access_insights_client affects
 
-* This module will install the latest `redhat-access-insights` rpm package and install cron jobs in `/etc/cron.daily/redhat-access-insights` or a systemd timer.
+* This module will install the latest `insights` rpm package and install cron jobs in `/etc/cron.daily/insights-client` or a systemd timer.
 
 ### Setup Requirements
 
@@ -41,7 +41,18 @@ The default parameters for the class will suffice for most deployments:
     class { 'access_insights_client':}
 ```
 
-This will enable the Red Hat Access Insights service and schedule a daily cron job for uploading analytics data.
+This will enable the Red Hat Insights service and schedule a daily job for uploading analytics data.
+
+The default behavior is for the class to install the "old" insights package `redhat-access-insights` v1 for RHEL versions 6.9 and ealier or versions 7.0-7.5 and install the "new" insights package `insights-client` v3 for RHEL version 6.10+ and 7.6+.
+
+Use the `deployment_style` parameter to force a particular version of the insights package ( assuming its available in your repository) e.g. :
+
+```
+    class { 'access_insights_client':
+        deployment_style => "old"
+    }
+```
+
 
 ## Reference
 

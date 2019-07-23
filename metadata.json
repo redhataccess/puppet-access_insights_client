@@ -1,8 +1,8 @@
 {
   "name": "lphiri-access_insights_client",
-  "version": "0.0.9",
+  "version": "1.0.0",
   "author": "Lindani Phiri (redhat)",
-  "summary": "Satellite 6 Client configuration for Red Hat proactive support services",
+  "summary": "Configure a host as a client for Red Hat Insights Cloud services.",
   "license": "MIT",
   "source": "https://github.com/redhataccess/puppet-access_insights_client",
   "project_page": "https://github.com/redhataccess/puppet-access_insights_client",
