@@ -1,7 +1,9 @@
 # @summary
-#   The access insights module is intended to deploy and configure the Red Hat
-#   Access Insights client.
+#   The old style deployment for Red Hat 6.9 and older or Red Hat 7.4 and
+#   older.
 #
+# @param package_name
+#   The name of the package to install
 # @param log_level
 #   Change log level, valid options DEBUG, INFO, WARNING, ERROR, CRITICAL.
 # @param auto_config
@@ -27,16 +29,14 @@
 #   Whether to obfuscate IP addresses.
 # @param obfuscate_hostname
 #   Whether to obfuscate hostname.
-# @param deployment_style
-#   How the module should be deploy. Can be undef (auto),
-#   current (6.10+ or 7.5+) or old.
 #
 # @author Lindani Phiri <lphiri@redhat.com>
 # @author Dan Varga  <dvarga@redhat.com>
 #
 # Copyright 2015 Red Hat Inc.
 #
-class access_insights_client(
+class access_insights_client::old (
+  $package_name = 'redhat-access-insights',
   $log_level = undef,
   $auto_config = 'True',
   $authmethod = undef,
@@ -49,31 +49,30 @@ class access_insights_client(
   $auto_update = undef,
   $obfuscate = undef,
   $obfuscate_hostname = undef,
-  $deployment_style = undef,
 ) {
-  if $deployment_style {
-    $class_name = $deployment_style
-  } else {
-    if (versioncmp($::operatingsystemrelease, '6.10') < 0 or
-      (versioncmp($::operatingsystemrelease, '7.0') >= 0 and versioncmp($::operatingsystemrelease, '7.5') < 0)) {
-      $class_name = 'old'
-    } else {
-      $class_name = 'current'
-    }
+  package { $package_name:
+    ensure => latest,
   }
 
-  class { "::access_insights_client::${class_name}":
-    log_level          => $log_level,
-    auto_config        => $auto_config,
-    authmethod         => $authmethod,
-    username           => $username,
-    password           => $password,
-    base_url           => $base_url,
-    proxy              => $proxy,
-    cert_verify        => $cert_verify,
-    gpg                => $gpg,
-    auto_update        => $auto_update,
-    obfuscate          => $obfuscate,
-    obfuscate_hostname => $obfuscate_hostname,
+  file { "/etc/${package_name}/${package_name}.conf":
+    ensure  => file,
+    content => template('access_insights_client/redhat-access-insights.conf.erb'),
+    require => Package[$package_name],
+  }
+
+  file { "/etc/cron.daily/${package_name}":
+    ensure  => 'link',
+    target  => "/etc/${package_name}/${package_name}.cron",
+    require => Package[$package_name],
+  }
+
+  file { "/etc/cron.weekly/${package_name}":
+    ensure => 'absent',
+  }
+
+  exec { "/usr/bin/${package_name} --register":
+    creates => "/etc/${package_name}/.registered",
+    unless  => "/usr/bin/test -f /etc/${package_name}/.unregistered",
+    require => Package[$package_name],
   }
 }
