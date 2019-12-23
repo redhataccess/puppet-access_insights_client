@@ -51,7 +51,7 @@ class access_insights_client::old (
   $obfuscate_hostname = undef,
 ) {
   package { $package_name:
-    ensure => latest,
+    ensure => installed,
   }
 
   file { "/etc/${package_name}/${package_name}.conf":
