@@ -36,7 +36,7 @@
 #
 # Copyright 2015 Red Hat Inc.
 #
-class access_insights_client(
+class access_insights_client (
   $log_level = undef,
   $auto_config = 'True',
   $authmethod = undef,
@@ -62,7 +62,7 @@ class access_insights_client(
     }
   }
 
-  class { "::access_insights_client::${class_name}":
+  class { "access_insights_client::${class_name}":
     log_level          => $log_level,
     auto_config        => $auto_config,
     authmethod         => $authmethod,
@@ -76,4 +76,5 @@ class access_insights_client(
     obfuscate          => $obfuscate,
     obfuscate_hostname => $obfuscate_hostname,
   }
+  contain "access_insights_client::${class_name}"
 }
