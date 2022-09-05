@@ -36,7 +36,7 @@
 #
 class access_insights_client::current (
   $package_name = 'insights-client',
-  $log_level = undef,
+  Optional[Enum['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']] $log_level = undef,
   $auto_config = 'True',
   $authmethod = undef,
   $username = undef,

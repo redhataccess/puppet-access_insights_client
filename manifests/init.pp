@@ -37,7 +37,7 @@
 # Copyright 2015 Red Hat Inc.
 #
 class access_insights_client (
-  $log_level = undef,
+  Optional[Enum['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']] $log_level = undef,
   $auto_config = 'True',
   $authmethod = undef,
   $username = undef,
@@ -49,7 +49,7 @@ class access_insights_client (
   $auto_update = undef,
   $obfuscate = undef,
   $obfuscate_hostname = undef,
-  $deployment_style = undef,
+  Optional[Enum['current', 'old']] $deployment_style = undef,
 ) {
   if $deployment_style {
     $class_name = $deployment_style
