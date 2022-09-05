@@ -17,7 +17,7 @@ The access_insights_client module allows you to easily configure the Red Hat Acc
 
 ## Module Description
 
-This module automates the registration of RHEL hosts to  Red Hat Access Insights, a hosted service designed to help you proactively identify and resolve technical issues in Red Hat Enterprise Linux and Red Hat Cloud Infrastructure environments. 
+This module automates the registration of RHEL hosts to  Red Hat Access Insights, a hosted service designed to help you proactively identify and resolve technical issues in Red Hat Enterprise Linux and Red Hat Cloud Infrastructure environments.
 The module can be used in RHEL hosts subscribed directly to the Red Hat CDN, or via Red Hat Satellite 5/6.
 
 ## Setup

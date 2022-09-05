@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'metadata-json-lint'
-gem 'puppetlabs_spec_helper'
-gem 'puppet', ENV.key?('PUPPET_VERSION') ? "~> #{ENV['PUPPET_VERSION']}" : '>= 3.8'
+gem 'puppet', ENV['PUPPET_GEM_VERSION'] || '>= 3.8', require: false
+gem 'puppet_metadata', '~> 1.0',  require: false
+gem 'voxpupuli-test', require: false

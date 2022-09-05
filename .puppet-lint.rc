@@ -1,0 +1,4 @@
+--no-legacy_facts-check
+--no-parameter_types-check
+--no-strict_indent-check
+--no-top_scope_facts-check
