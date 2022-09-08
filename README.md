@@ -92,6 +92,8 @@ Parameters
 This module has been tested with the following operating systems:
 * RHEL 6.x
 * RHEL 7.x
+* RHEL 8.x
+* RHEL 9.x
 
 ## Development
 
