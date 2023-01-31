@@ -68,7 +68,7 @@ class access_insights_client::current (
     require => Package[$package_name],
   }
 
-  if versioncmp($::operatingsystemrelease, '7.0') >= 0 {
+  if versioncmp($facts['os']['release']['full'], '7.0') >= 0 {
     file { [
         "/etc/cron.weekly/${package_name}",
         "/etc/cron.daily/${package_name}",
