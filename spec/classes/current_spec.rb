@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'access_insights_client::current' do
   context 'on 6.10' do
     let :facts do
-      {:operatingsystemrelease => '6.10'}
+      {os: {release: {full: '6.10'}}}
     end
 
     it { is_expected.to compile.with_all_deps }
@@ -21,7 +21,7 @@ describe 'access_insights_client::current' do
 
   context 'on 7.0' do
     let :facts do
-      {:operatingsystemrelease => '7.0'}
+      {os: {release: {full: '7.0'}}}
     end
 
     it { is_expected.to compile.with_all_deps }

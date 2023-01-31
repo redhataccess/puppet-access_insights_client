@@ -54,8 +54,8 @@ class access_insights_client (
   if $deployment_style {
     $class_name = $deployment_style
   } else {
-    if (versioncmp($::operatingsystemrelease, '6.10') < 0 or
-      (versioncmp($::operatingsystemrelease, '7.0') >= 0 and versioncmp($::operatingsystemrelease, '7.5') < 0)) {
+    if (versioncmp($facts['os']['release']['full'], '6.10') < 0 or
+    (versioncmp($facts['os']['release']['full'], '7.0') >= 0 and versioncmp($facts['os']['release']['full'], '7.5') < 0)) {
       $class_name = 'old'
     } else {
       $class_name = 'current'

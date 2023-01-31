@@ -8,7 +8,7 @@ describe 'access_insights_client' do
       end
 
       let :facts do
-        {:operatingsystemrelease => '6.10'}
+        {os: {release: {full: '6.10'}}}
       end
 
       it { is_expected.to compile.with_all_deps }
@@ -26,7 +26,7 @@ describe 'access_insights_client' do
     }.each do |version, expected|
       context "on #{version}" do
         let :facts do
-          {:operatingsystemrelease => version}
+        {os: {release: {full: version}}}
         end
 
         it { is_expected.to compile.with_all_deps }
