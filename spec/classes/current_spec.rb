@@ -36,5 +36,14 @@ describe 'access_insights_client::current' do
     it { is_expected.to contain_file('/etc/cron.weekly/insights-client').with_ensure('absent') }
     it { is_expected.to contain_exec('/usr/bin/insights-client --register') }
     it { is_expected.to contain_service('insights-client.timer') }
+    it { is_expected.to contain_file('/etc/insights-client/tags.yaml').with_content(%r{^--- \{\}$}) }
+
+    context 'with tags' do
+      let :params do
+        {tags: {'foo': 'bar'}}
+      end
+
+      it { is_expected.to contain_file('/etc/insights-client/tags.yaml').with_content(%r{^---\nfoo: bar$}) }
+    end
   end
 end

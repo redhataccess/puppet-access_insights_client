@@ -30,6 +30,8 @@
 # @param deployment_style
 #   How the module should be deploy. Can be undef (auto),
 #   current (6.10+ or 7.5+) or old.
+# @param tags
+#   Data Hash to populate tags.yaml file
 #
 # @author Lindani Phiri <lphiri@redhat.com>
 # @author Dan Varga  <dvarga@redhat.com>
@@ -49,6 +51,7 @@ class access_insights_client (
   $auto_update = undef,
   $obfuscate = undef,
   $obfuscate_hostname = undef,
+  Hash $tags = {},
   Optional[Enum['current', 'old']] $deployment_style = undef,
 ) {
   if $deployment_style {
@@ -75,6 +78,7 @@ class access_insights_client (
     auto_update        => $auto_update,
     obfuscate          => $obfuscate,
     obfuscate_hostname => $obfuscate_hostname,
+    tags               => $tags,
   }
   contain "access_insights_client::${class_name}"
 }

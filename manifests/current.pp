@@ -28,6 +28,9 @@
 #   Whether to obfuscate IP addresses.
 # @param obfuscate_hostname
 #   Whether to obfuscate hostname.
+# @param tags
+#   Data Hash to populate tags.yaml file
+#
 #
 # @author Lindani Phiri <lphiri@redhat.com>
 # @author Dan Varga  <dvarga@redhat.com>
@@ -48,6 +51,7 @@ class access_insights_client::current (
   $auto_update = undef,
   $obfuscate = undef,
   $obfuscate_hostname = undef,
+  Hash $tags = {},
 ) {
   package { $package_name:
     ensure => installed,
@@ -91,6 +95,11 @@ class access_insights_client::current (
     file { "/etc/cron.weekly/${package_name}":
       ensure => 'absent',
     }
+  }
+
+  file { "/etc/${package_name}/tags.yaml":
+    content => to_yaml($tags),
+    require => Package[$package_name],
   }
 
   exec { "/usr/bin/${package_name} --register":

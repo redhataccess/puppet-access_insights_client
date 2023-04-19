@@ -29,6 +29,8 @@
 #   Whether to obfuscate IP addresses.
 # @param obfuscate_hostname
 #   Whether to obfuscate hostname.
+# @param tags
+#   Data Hash to populate tags.yaml file ---> This will not work for the old style of deployment.
 #
 # @author Lindani Phiri <lphiri@redhat.com>
 # @author Dan Varga  <dvarga@redhat.com>
@@ -49,7 +51,12 @@ class access_insights_client::old (
   $auto_update = undef,
   $obfuscate = undef,
   $obfuscate_hostname = undef,
+  Hash $tags = {},
 ) {
+  if !$tags.empty {
+    fail('You cant use tags with this implementation')
+  }
+
   package { $package_name:
     ensure => installed,
   }
