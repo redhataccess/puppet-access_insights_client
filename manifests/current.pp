@@ -28,6 +28,8 @@
 #   Whether to obfuscate IP addresses.
 # @param obfuscate_hostname
 #   Whether to obfuscate hostname.
+# @param display_name
+#   Display name for this system.
 #
 # @author Lindani Phiri <lphiri@redhat.com>
 # @author Dan Varga  <dvarga@redhat.com>
@@ -35,19 +37,20 @@
 # Copyright 2015 Red Hat Inc.
 #
 class access_insights_client::current (
-  $package_name = 'insights-client',
+  String $package_name = 'insights-client',
   Optional[Enum['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']] $log_level = undef,
-  $auto_config = 'True',
-  $authmethod = undef,
-  $username = undef,
-  $password = undef,
-  $base_url = undef,
-  $proxy = undef,
-  $cert_verify = undef,
-  $gpg = undef,
-  $auto_update = undef,
-  $obfuscate = undef,
-  $obfuscate_hostname = undef,
+  Boolean $auto_config = 'True',
+  Optional[Enum['BASIC','CERT']] $authmethod = undef,
+  Optional[String] $username = undef,
+  Optional[String] $password = undef,
+  Optional[Stdlib::Fqdn] $base_url = undef,
+  Optional[Stdlib::HTTPUrl] $proxy = undef,
+  Optional[Boolean] $cert_verify = undef,
+  Optional[Boolean] $gpg = undef,
+  Optional[Boolean] $auto_update = undef,
+  Optional[Boolean] $obfuscate = undef,
+  Optional[Boolean] $obfuscate_hostname = undef,
+  Stdlib::Host $display_name = undef,
 ) {
   package { $package_name:
     ensure => installed,
